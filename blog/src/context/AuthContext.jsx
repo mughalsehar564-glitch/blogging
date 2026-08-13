@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../data/apiClient';
 
 const AuthContext = createContext();
-
-const API_URL = 'http://localhost:5000/api/auth';
 
 export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -30,15 +28,15 @@ export const AuthProvider = ({ children }) => {
 
   const userLogin = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { email, password });
-      const { token, user: userData } = response.data;
+      const response = await apiClient.post('/api/auth/login', { email, password });
+      const { token: newToken, user: userData } = response.data;
       
       setUser(userData);
-      setToken(token);
+      setToken(newToken);
       setIsAdmin(userData.isAdmin);
       
       localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', newToken);
       localStorage.setItem('is_admin', userData.isAdmin.toString());
       
       return { success: true };
@@ -52,15 +50,15 @@ export const AuthProvider = ({ children }) => {
 
   const userSignup = async (name, email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/signup`, { name, email, password });
-      const { token, user: userData } = response.data;
+      const response = await apiClient.post('/api/auth/signup', { name, email, password });
+      const { token: newToken, user: userData } = response.data;
       
       setUser(userData);
-      setToken(token);
+      setToken(newToken);
       setIsAdmin(userData.isAdmin);
       
       localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', newToken);
       localStorage.setItem('is_admin', userData.isAdmin.toString());
       
       return { success: true };

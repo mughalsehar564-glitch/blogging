@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api/categories';
+import apiClient from './apiClient';
 
 export const categoryService = {
   getAllCategories: async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await apiClient.get('/api/categories');
       return response.data;
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -15,7 +13,7 @@ export const categoryService = {
 
   createCategory: async (categoryData) => {
     try {
-      const response = await axios.post(API_URL, categoryData);
+      const response = await apiClient.post('/api/categories', categoryData);
       return response.data;
     } catch (error) {
       console.error('Error creating category:', error);
@@ -25,7 +23,7 @@ export const categoryService = {
 
   deleteCategory: async (id) => {
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await apiClient.delete(`/api/categories/${id}`);
       return true;
     } catch (error) {
       console.error('Error deleting category:', error);

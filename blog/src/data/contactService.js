@@ -1,12 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api/messages';
+import apiClient from './apiClient';
 
 export const contactService = {
-  // Save a new submission
   saveSubmission: async (data) => {
     try {
-      const response = await axios.post(API_URL, data);
+      const response = await apiClient.post('/api/messages', data);
       return { success: true, data: response.data };
     } catch (error) {
       console.error('Error saving submission:', error);
@@ -14,10 +11,9 @@ export const contactService = {
     }
   },
 
-  // Get all submissions
   getSubmissions: async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await apiClient.get('/api/messages');
       return response.data;
     } catch (error) {
       console.error('Error fetching submissions:', error);
@@ -25,10 +21,9 @@ export const contactService = {
     }
   },
 
-  // Delete a submission
   deleteSubmission: async (id) => {
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await apiClient.delete(`/api/messages/${id}`);
       return true;
     } catch (error) {
       console.error('Error deleting submission:', error);

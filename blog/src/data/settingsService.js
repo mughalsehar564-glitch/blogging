@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api/settings';
+import apiClient from './apiClient';
 
 export const settingsService = {
   getSettings: async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await apiClient.get('/api/settings');
       return response.data;
     } catch (error) {
       console.error('Error fetching settings:', error);
@@ -15,7 +13,7 @@ export const settingsService = {
 
   updateSettings: async (settingsData) => {
     try {
-      const response = await axios.post(API_URL, settingsData);
+      const response = await apiClient.post('/api/settings', settingsData);
       return response.data;
     } catch (error) {
       console.error('Error updating settings:', error);
