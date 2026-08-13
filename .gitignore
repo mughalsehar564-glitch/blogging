@@ -40,3 +40,6 @@ Thumbs.db
 
 # Misc
 *.local
+
+# Separate repos (maintained as independent GitHub repos)
+blogback/
